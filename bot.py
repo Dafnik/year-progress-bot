@@ -9,15 +9,15 @@ total = endTime - startTime
 percentage = round((1 - rest.total_seconds()/total.total_seconds()) * 100)
 
 if percentage == 100:
-	print("100% triggered");
-	currentDay = int(datetime.now().strftime("%d"))
-	currentMonth = int(datetime.now().strftime("%m"))
-	print("Current day: ", str(currentDay))
-	print("Current month: ", str(currentMonth))
+        print("100% triggered");
+        currentDay = int(datetime.now().strftime("%d"))
+        currentMonth = int(datetime.now().strftime("%m"))
+        print("Current day: ", str(currentDay))
+        print("Current month: ", str(currentMonth))
 
-	if currentDay != 31 or currentMonth != 12:
-		print("It is not the last day of the year! Bye")
-		quit()
+        if currentDay != 31 or currentMonth != 12:
+                print("It is not the last day of the year! Bye")
+                quit()
 
 #   Set up Mastodon
 mastodon = Mastodon(
@@ -34,33 +34,32 @@ print("Current percentage: ", str(percentage))
 iCurrentPercentage = int(currentPercentage)
 
 if iCurrentPercentage != percentage:
-	print("New percentage found!")
-	#mastodon.status_post()
+        print("New percentage found!")
 
-	percentageToShow = round(percentage / 10);
+        percentageToShow = round(percentage / 100 * 20);
 
-	toPostMessage = ""
+        toPostMessage = ""
 
-	for x in range(percentageToShow * 2):
-		toPostMessage = toPostMessage + "▓";
+        for x in range(percentageToShow):
+                toPostMessage = toPostMessage + "▓";
 
-	for x in range(percentageToShow * 2, 10*2):
-		toPostMessage = toPostMessage + "░"
+        for x in range(percentageToShow, 20):
+                toPostMessage = toPostMessage + "░"
 
-	toPostMessage = toPostMessage + " [" + str(percentage) + "%]"
+        toPostMessage = toPostMessage + " [" + str(percentage) + "%]"
 
-	print(toPostMessage)
+        print(toPostMessage)
 
-	mastodon.status_post(toPostMessage)
+        mastodon.status_post(toPostMessage)
 
-	print("Saving current percentage");
-	f = open("currentPercentage.txt", "w")
-	f.write(str(percentage))
-	f.close()
-	print("Saving new percentage...");
+        print("Saving current percentage");
+        f = open("currentPercentage.txt", "w")
+        f.write(str(percentage))
+        f.close()
+        print("Saving new percentage...");
 
 
 else:
-	print("Got nothing to do!");
+        print("Got nothing to do!");
 
 print ("Good bye")
