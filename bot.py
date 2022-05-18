@@ -70,7 +70,7 @@ if savedPercentage != percentage:
         print("Saved");
 
         #print("Sending post uptime ping")
-        #requests.get("https://monitor.dafnik.me/api/push/MgMUsgO7WO", data = {})
+        #requests.get("https://url", data = {})
 
 else:
         print("Got nothing to do!");
