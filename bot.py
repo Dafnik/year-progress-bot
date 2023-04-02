@@ -67,28 +67,38 @@ if savedPercentage != percentage:
         f = open("currentPercentage.txt", "w")
         f.write(sPercentage)
         f.close()
-        print("Saved");
+        print("percentage saved");
         
+        sSavedPfpFilename = open("currentPfp.txt", "r").readline(2);
         pfpFilename = "./hourglass";
-          
-        if percentage >= 0 and percentage < 25:
-                pfpFilename += "-top";
-        elif percentage >= 25 and percentage < 50:
-                pfpFilename += "-split";
-        elif percentage >= 50 and percentage < 75:
-                pfpFilename += "-bottom";
-        
+
+        if percentage >= 0 and percentage < 33:
+            pfpFilename += "-top";
+        elif percentage >= 33 and percentage < 66:
+            pfpFilename += "-split";
+        elif percentage >= 66:
+            pfpFilename += "-bottom";
+
         pfpFilename += ".png";
+
+        print("Current pfp to set: ", pfpFilename)
+        print("Saved pfp: ", sSavedPfpFilename)
         
-        print("Pfp to set: ", pfpFilename)
-        
-        # Open the image file and read its contents
-        with open(pfpFilename, 'rb') as f:
-            image_data = f.read()
-        
-        mastodon.account_update_credentials(
-            avatar=image_data,avatar_mime_type='image/png'
-        )
+        if sSavedPfpFilename != pfpFilename:
+                print("New pfp path found!")
+                # Open the image file and read its contents
+                with open(pfpFilename, 'rb') as fr:
+                    image_data = fr.read()
+
+                mastodon.account_update_credentials(
+                    avatar=image_data,avatar_mime_type='image/png'
+                )
+                
+                print("Saving current pfp path...");
+                pf = open("currentPfp.txt", "w")
+                pf.write(pfpFilename)
+                pf.close()
+                print("pfp path saved");
 
         #print("Sending post uptime ping")
         #requests.get("https://url", data = {})
