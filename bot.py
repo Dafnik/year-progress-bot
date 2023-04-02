@@ -69,30 +69,25 @@ if savedPercentage != percentage:
         f.close()
         print("Saved");
         
-        
         pfpFilename = "./hourglass";
-        
-        # trying to update pfp
-        if percentageToShow >= 0 & percentageToShow < 25:
+          
+        if percentage >= 0 and percentage < 25:
                 pfpFilename += "-top";
-        elif percentageToShow >= 25 & percentageToShow < 50:
+        elif percentage >= 25 and percentage < 50:
                 pfpFilename += "-split";
-        elif percentageToShow >= 50 & percentageToShow < 75:
+        elif percentage >= 50 and percentage < 75:
                 pfpFilename += "-bottom";
         
-        pfpFilename += ".webp";
-
+        pfpFilename += ".png";
+        
+        print("Pfp to set: ", pfpFilename)
+        
         # Open the image file and read its contents
         with open(pfpFilename, 'rb') as f:
             image_data = f.read()
-
-        # Upload the image to Mastodon and get its ID
-        media = mastodon.media_post(image_data, 'image/png')
-        image_id = media['id']
-
-        # Update the user's profile picture using the image ID
+        
         mastodon.account_update_credentials(
-            avatar=image_id
+            avatar=image_data,avatar_mime_type='image/png'
         )
 
         #print("Sending post uptime ping")
