@@ -68,6 +68,24 @@ if savedPercentage != percentage:
         f.write(sPercentage)
         f.close()
         print("Saved");
+        
+        
+        pfpFilename = "./hourglass";
+        
+        # trying to update pfp
+        if percentageToShow >= 0 && percentageToShow < 25:
+                pfpFilename += "-top";
+        elif percentageToShow >= 25 && percentageToShow < 50:
+                pfpFilename += "-split";
+        elif percentageToShow >= 50 && percentageToShow < 75:
+                pfpFilename += "-bottom";
+        
+        pfpFilename += ".webp";
+
+        fp = open(pfpFilename, 'rb')
+        pfp = fp.read()
+        
+        mastodon.account_update_credentials(avatar = pfp, avatar_mime_type="webp")
 
         #print("Sending post uptime ping")
         #requests.get("https://url", data = {})
